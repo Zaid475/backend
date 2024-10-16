@@ -1,12 +1,15 @@
-const myexpress=require("express");
+import myexpress from "express";
+import { Login, Register } from "./controllers/auth.controller.js";
+import allRoutes from "./routes/index.js"
 const app=myexpress();
-app.get("/",((req,res)=>{
+app.use(myexpress.json())
+app.get("/",(req,res)=>{
     res.send("Welcome to the Home page")
-}))
+})
+app.use("/api/v1",allRoutes);
 
-app.get("/login",((req,res)=>{
-    res.send("Welcome to the Login page")
-}))
+// app.get("/login",Login)
+// app.post("/register",Register)
 
 
 app.listen(8000,()=>{
