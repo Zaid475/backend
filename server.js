@@ -1,14 +1,14 @@
-const httpmodule=require("http");
-const server=httpmodule.createServer((req,res)=>{
-    if(req.method=="GET" && req.url=="/"){
-        res.end("welcome to backend")
-    }
-    else{
-        res.end("wrong url")
-    }
+const myexpress=require("express");
+const app=myexpress();
+app.get("/",((req,res)=>{
+    res.send("Welcome to the Home page")
+}))
 
-});
-server.listen(8000,()=>{
-    console.log("server running on port 8000")
+app.get("/login",((req,res)=>{
+    res.send("Welcome to the Login page")
+}))
+
+
+app.listen(8000,()=>{
+    console.log("Server is running on port no 8000")
 })
-
