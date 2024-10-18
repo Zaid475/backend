@@ -1,8 +1,10 @@
 import myexpress from "express";
 import { Login, Register } from "./controllers/auth.controller.js";
 import allRoutes from "./routes/index.js"
+import dotenv from "dotenv";
 const app=myexpress();
 app.use(myexpress.json())
+dotenv.config();
 app.get("/",(req,res)=>{
     res.send("Welcome to the Home page")
 })
