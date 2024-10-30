@@ -4,7 +4,7 @@ import bcrypt from "bcrypt";
 export const Login=async (req,res)=>{
 try{
 
-const{email,password}=req.body.data;
+const{email,password}=req.body.Userdata;
 console.log("email",email,"password",password)
 if(!email || !password){
     return res.json({message:"Fill the fields", success:false})
@@ -16,21 +16,21 @@ if(!existemail){
 }
 const passwordcheck=await bcrypt.compare(password,existemail.password)
 if(!passwordcheck){
-    return res.json({message:"wrong password Try again",success:flase})
+    return res.json({message:"wrong password Try again",success:false})
 }
 
-// return res.json({
-//     message:"USER INFO",
-//     success:true,
-//     Userdata:{
-//         email:existemail.email,password:existemail.password
-//     }
+return res.json({
+    message:"Login Successful",
+    success:true,
+    Userdata:{
+        email:existemail.email,password:existemail.password,name:existemail.name
+    }
 
 
 
-// });
+});
 
-res.send("Logged in Succesfully")
+
 
 
 }
@@ -46,13 +46,13 @@ const{name,email,password,age}=req.body.Userdata;
 
 console.log(name,email,password,age,"req.body data");
 if(!name || !email || !password || !age){
-     return res.send("Fill all fields")
+     return res.json({message:"Fill all fields",success:false})
 }
 const emailexist=await Usermodel.findOne({email:email});
 console.log(emailexist);
 
 if(emailexist){
-    return res.send("email already exists use a new one")
+    return res.json({message:"Email already exists",success:false})
 }
 const hashedpassword= await bcrypt.hash(password,10);
 console.log(hashedpassword);
@@ -71,9 +71,9 @@ const newuser=new Usermodel({
 console.log(newuser);
 const response=await newuser.save();
 console.log(response)
- return res.send("Registration Completed")
+ return res.json({message:"Registration completed",success:true})
 }
 catch(error){
-    res.send(error);
+    res.json({message:error,success:false});
 }
 }
