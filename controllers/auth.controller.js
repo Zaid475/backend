@@ -7,17 +7,28 @@ try{
 const{email,password}=req.body.data;
 console.log("email",email,"password",password)
 if(!email || !password){
-    return res.send("Fill the fields")
+    return res.json({message:"Fill the fields", success:false})
 }
 const existemail= await Usermodel.findOne({email:email})
 console.log(existemail);
 if(!existemail){
-    return res.send("Email not found Try again")
+    return res.json({message:"Email not found Try again",success:false})
 }
 const passwordcheck=await bcrypt.compare(password,existemail.password)
 if(!passwordcheck){
-    return res.send("wrong password Try again")
+    return res.json({message:"wrong password Try again",success:flase})
 }
+
+// return res.json({
+//     message:"USER INFO",
+//     success:true,
+//     Userdata:{
+//         email:existemail.email,password:existemail.password
+//     }
+
+
+
+// });
 
 res.send("Logged in Succesfully")
 
