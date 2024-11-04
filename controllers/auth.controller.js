@@ -1,5 +1,6 @@
 import Usermodel from "../Models/Usershcema.js";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 export const Login=async (req,res)=>{
 try{
@@ -18,6 +19,11 @@ const passwordcheck=await bcrypt.compare(password,existemail.password)
 if(!passwordcheck){
     return res.json({message:"wrong password Try again",success:false})
 }
+
+const encryptedtoken=jwt.sign({Userid:existemail._id},process.env.ENCRYPTIONSECRET);
+console.log(encryptedtoken,"ENCRYPTEDTOKEN")
+
+res.cookie("Token",encryptedtoken)
 
 return res.json({
     message:"Login Successful",
