@@ -4,7 +4,9 @@ import allRoutes from "./routes/index.js"
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import cors from "cors"
+import cookieParser from "cookie-parser";
 const app=myexpress();
+app.use(cookieParser());
 app.use(myexpress.json())
 app.use(cors({origin:"http://localhost:3000",credentials:true}));
 dotenv.config();

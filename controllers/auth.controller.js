@@ -2,6 +2,29 @@ import Usermodel from "../Models/Usershcema.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
+
+export const UserData=async (req,res)=>{
+    try{
+        console.log(req.cookies,"your cookie")
+        const token=req.cookies.Token
+        if(!token) return res.status(400).json({success:false})
+        const tokendata=jwt.verify(token,process.env.ENCRYPTIONSECRET)
+    console.log(tokendata)
+    const userexist=await Usermodel.findById(tokendata.Userid)
+    console.log(userexist)
+    if(!userexist) return res.status(400).json({success:false})
+        return res.status(200).json({success:true,UserData:{
+            email:userexist.email,password:userexist.password,name:userexist.name
+        }})
+
+      
+    }
+    catch(error){
+        
+        return res.json({message:error,success:false})
+    }
+}
+
 export const Login=async (req,res)=>{
 try{
 
