@@ -14,7 +14,7 @@ export const UserData=async (req,res)=>{
     console.log(userexist)
     if(!userexist) return res.status(400).json({success:false})
         return res.status(200).json({success:true,UserData:{
-            email:userexist.email,password:userexist.password,name:userexist.name
+            email:userexist.email,name:userexist.name
         }})
 
       
