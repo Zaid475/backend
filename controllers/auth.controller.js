@@ -14,7 +14,7 @@ export const UserData=async (req,res)=>{
     console.log(userexist)
     if(!userexist) return res.status(400).json({success:false})
         return res.status(200).json({success:true,UserData:{
-            email:userexist.email,name:userexist.name
+            email:userexist.email,name:userexist.name,userId:userexist._id
         }})
 
       
@@ -52,8 +52,9 @@ return res.json({
     message:"Login Successful",
     success:true,
     Userdata:{
-        email:existemail.email,password:existemail.password,name:existemail.name
+        email:existemail.email,password:existemail.password,name:existemail.name,userId:existemail._id
     }
+    
 
 
 
