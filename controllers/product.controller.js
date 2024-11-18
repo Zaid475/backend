@@ -6,7 +6,7 @@ export const createProduct=async(req,res)=>{
         const{productName,productCategory,productPrice,productQuantity,productImage}=req.body.productData
         const{userId}=req.body
         if(!productName || !productCategory || !productPrice || !productQuantity || !productImage || !userId){
-            return res.json({message:"all fields mandatory",success:true})
+            return res.json({message:"all fields mandatory",success:false})
         }
         const Newuser=productModel({
             Name:productName,
@@ -57,4 +57,36 @@ export const viewProducts=async(req,res)=>{
     }
 
 
+}
+export const singleproductData=async (req,res)=>{
+    try{
+        const{productId}=req.params
+        console.log("params",req.params)
+        if(!productId){
+            return res.json({message:"ID missing",success:false})
+        }
+
+        const productdata=await productModel.findById(productId)
+        if(!productdata){
+        return res.json({
+            success:false,
+            message:"prod not found"
+        })
+    }
+    
+
+        return res.json({
+            success:true,
+            productdata
+        })
+    }
+    
+    catch(error){
+        return res.json({
+            message:"oops something went wrong",
+            success:false
+        })
+        
+
+    }
 }
