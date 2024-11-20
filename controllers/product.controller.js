@@ -90,3 +90,62 @@ export const singleproductData=async (req,res)=>{
 
     }
 }
+
+export const filterProducts=async (req,res)=>{
+    try{
+        const{category}=req.body
+        let query={}
+        if(category){
+            query={Category:category}
+        }
+        const allproducts=await productModel.find(query)
+       
+    
+
+        return res.json({
+            success:true,
+            allproducts
+           
+        })
+    }
+    
+    catch(error){
+        return res.json({
+            message:"oops something went wrong",
+            success:false
+        })
+        
+
+    }
+}
+
+export const sortProducts=async (req,res)=>{
+    try{
+        const{sortMethod}=req.body;
+        let sortQuery={}
+        if(sortMethod=="lowtoHigh"){
+            sortQuery={Price:1,}
+
+        }
+        else{
+            sortQuery={Price:-1,}
+
+        }
+        console.log(sortQuery,"sortQuery",":",sortMethod,"sortMethod")
+        const products=await productModel.find({}).sort(sortQuery)
+         return res.json({
+            success:true,
+            products
+           
+        })
+    }
+    
+    catch(error){
+        return res.json({
+            message:"oops something went wrong",
+            success:false
+        })
+        
+
+    }
+}
